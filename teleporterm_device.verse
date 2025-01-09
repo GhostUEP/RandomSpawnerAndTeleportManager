@@ -35,30 +35,35 @@ teleporterm_device := class(creative_device):
     TeleportPlayer(P:player):void=
         var hasFoundTP : logic = false
         loop:
+            if (not P.IsActive[]):
+                Print("Player is not active, failed to teleport")
+                return
             if (hasFoundTP?):
-                Print("Player Teleportado")
+                Print("Player Teleported")
                 break
-            Print("Procurando Teleport")
+            Print("Searching Teleporter")
             RandomTPNumber:=GetRandomInt(0, Teleporters.Length-1)
             if (RandomTPNumber <> CurrentTP, Teleporter:=Teleporters[RandomTPNumber]):
                 Teleporter.Teleport(P)
                 set CurrentTP = RandomTPNumber
                 set hasFoundTP = true
-                Print("Teleport Encontrado")
+                Print("Teleporter Found")
 
     # Random teleport Player async
     TeleportPlayerAsync(P:player)<suspends>:void=
         var hasFoundTP : logic = false
         loop:
             Sleep(0.1)
+            if (not P.IsActive[]):
+                Print("Player is not active, failed to teleport")
+                return
             if (hasFoundTP?):
-                Print("Player Teleportado")
+                Print("Player Teleported")
                 break
-            Print("Procurando Teleport")
+            Print("Searching Teleporter")
             RandomTPNumber:=GetRandomInt(0, Teleporters.Length-1)
             if (RandomTPNumber <> CurrentTP, Teleporter:=Teleporters[RandomTPNumber]):
                 Teleporter.Teleport(P)
                 set CurrentTP = RandomTPNumber
                 set hasFoundTP = true
-                Print("Teleport Encontrado")
-                
+                Print("Teleporter Found")
